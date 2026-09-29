@@ -1,0 +1,23 @@
+@use "@Styles/shared.scss" as *;
+.Loader{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    .Cat-icon{
+        width: 200px;
+        fill: $RoyalViolet;
+    }
+
+}
+
+.Loader::after{
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 1);
+    content: '';
+}

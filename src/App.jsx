@@ -3,6 +3,7 @@ import SearchBar from "@Components/SearchBar";
 import WorldMap from "@Components/WorldMap";
 import Modal from "@Components/Modal";
 import Layout from "@Components/Layout";
+import Loader from "@Components/Loader";
 import fetchCountryData from "@Services/fetchCountry";
 import fetchNews from "@Services/fetchNews";
 class App extends Component {
@@ -12,11 +13,13 @@ class App extends Component {
     isLoading: false,
     country: {},
     articles: [],
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.countryName !== this.state.countryName) {
       this.getCountryData();
+      this.getArticles();
     }
   }
 
@@ -31,15 +34,14 @@ class App extends Component {
   };
 
   getCountryData = async () => {
-    const { countryName, page } = this.state;
+    const { countryName } = this.state;
     try {
       this.setState({
         isLoading: true,
       });
 
       const data = await fetchCountryData(countryName);
-      const news = await fetchNews(countryName, page);
-      this.setState({ country: data, articles: news });
+      this.setState({ country: data });
     } catch (error) {
       console.log(`There was an error${error}`);
       this.setState({ error });
@@ -48,12 +50,28 @@ class App extends Component {
     }
   };
 
+  getArticles = async () => {
+    const { countryName, page } = this.state;
+
+    try {
+      this.setState({ isLoading: true });
+      const news = await fetchNews(countryName, page);
+      this.setState({ articles: news });
+    } catch (error) {
+      console.log(error);
+      this.setState({ error });
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
   render() {
-    const { country, articles } = this.state;
+    const { country, articles, isLoading } = this.state;
     const areArticlesLoaded = articles.length > 0;
     return (
       <>
         <Layout>
+          {isLoading && <Loader />}
           <SearchBar onSubmit={this.handleFormSubmit} />
           <WorldMap country={country} />
           <Modal country={country} articles={articles} />
