@@ -1,8 +1,10 @@
 import React from "react";
+import "./NewsList.scss";
 import Article from "../Article";
 const NewsList = ({ articles }) => {
   return (
-    <ul>
+    <ul className="NewsList">
+      News:
       {articles.map((article, index) => (
         <li key={index}>
           <Article article={article} />

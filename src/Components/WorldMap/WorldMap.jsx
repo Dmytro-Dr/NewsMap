@@ -15,7 +15,7 @@ export default class WorldMap extends Component {
       <MapContainer
         center={position}
         zoom={5}
-        minZoom={5}
+        minZoom={1}
         zoomControl={false}
         dragging={false}
       >

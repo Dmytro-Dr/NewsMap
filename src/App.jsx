@@ -2,6 +2,7 @@ import { Component } from "react";
 import SearchBar from "@Components/SearchBar";
 import WorldMap from "@Components/WorldMap";
 import Modal from "@Components/Modal";
+import Layout from "@Components/Layout";
 import fetchCountryData from "@Services/fetchCountry";
 import fetchNews from "@Services/fetchNews";
 class App extends Component {
@@ -52,9 +53,11 @@ class App extends Component {
     const areArticlesLoaded = articles.length > 0;
     return (
       <>
-        <SearchBar onSubmit={this.handleFormSubmit} />
-        <WorldMap country={country} />
-        <Modal country={country} articles={articles} />
+        <Layout>
+          <SearchBar onSubmit={this.handleFormSubmit} />
+          <WorldMap country={country} />
+          <Modal country={country} articles={articles} />
+        </Layout>
       </>
     );
   }

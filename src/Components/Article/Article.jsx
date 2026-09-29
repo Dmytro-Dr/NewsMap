@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./Article.scss";
 class Article extends Component {
   render() {
     const {
@@ -9,15 +9,30 @@ class Article extends Component {
         title = "",
         url = "",
         urlToImage = "1",
+        source: { name },
       },
     } = this.props;
     console.log(this.props);
     return (
-      <div>
-        <h1>Title: {title}</h1>
-        <h2>Description: {description}</h2>
-        <h3>Author </h3>
-        <img src={urlToImage} width={200} alt={title} />
+      <div className="Article_wrapper">
+        <a href={urlToImage} referrerPolicy="no-referrer">
+          <img
+            className="Article_image"
+            src={urlToImage}
+            width={400}
+            alt={title}
+          />
+        </a>
+        <a href={url}>
+          <h1>Title: {title}</h1>
+        </a>
+        <p>Description: {description}</p>
+        <h3>
+          Source: 
+          <a href={author} referrerPolicy="no-referrer">
+            {name}
+          </a>
+        </h3>
       </div>
     );
   }
