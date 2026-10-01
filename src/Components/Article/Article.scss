@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 15px;
     width: fit-content;
     h1{
         text-align: left;
@@ -15,5 +16,9 @@
   .Article_image {
     border-radius: 10px;
     border: 1px solid $FloralWhite;
+  }
+
+  @media screen and (min-width: 900px) {
+    margin-bottom: 30px;
   }
 }

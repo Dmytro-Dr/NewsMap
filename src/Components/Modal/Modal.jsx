@@ -6,10 +6,9 @@ export default class Modal extends Component {
   state = {
     myRef: React.createRef(),
     onPhone: navigator.userAgent.match(/Mobile/),
-    problematicWidth: window.matchMedia("(max-width: 440px)"),
   };
   render() {
-    const { myRef, onPhone, problematicWidth } = this.state;
+    const { myRef, onPhone } = this.state;
     const {
       country: {
         capitals = [{ name: "" }],
@@ -26,25 +25,22 @@ export default class Modal extends Component {
         names = { common: "" },
       },
       articles = [],
+      isLoading,
+      areArticles,
+      onClick,
     } = this.props;
 
     return (
       <Draggable
         nodeRef={myRef}
-        defaultPosition={
-          onPhone
-            ? problematicWidth
-              ? { x: -188, y: -478 }
-              : { x: -180, y: -478 }
-            : { x: -252, y: -321 }
-        }
+        positionOffset={{ x: "-50%", y: "-50%" }}
         disabled={onPhone && false}
-        allowMobileScroll={onPhone && true}
+        // allowMobileScroll={onPhone && true}
         axis={onPhone && "y"}
-        bounds={{ top: -700 }}
+        bounds={{ top: -320, bottom: 20 }}
       >
         <div ref={myRef} className="Modal_wrapper">
-          <div className="Modal-header_wrapper">
+          <div className="Modal_header-wrapper">
             <div className="Modal_title-wrapper">
               <h1>Country: {names.common}</h1>
               <h2>Capital:{capitals[0].name}</h2>
@@ -63,8 +59,16 @@ export default class Modal extends Component {
             <h4>Population: {population}</h4>
             <h5>Government: {government_type}</h5>
             <p>Descriptions: {descriptions.short}</p>
+            <section className="Modal_news-section">
+              <h1> News:</h1>
+            </section>
           </div>
-          <NewsList articles={articles} />
+          <NewsList
+            articles={articles}
+            isLoading={isLoading}
+            areArticles={areArticles}
+            onClick={onClick}
+          />
         </div>
       </Draggable>
     );

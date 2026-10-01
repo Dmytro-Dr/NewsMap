@@ -3,6 +3,7 @@ import SearchBar from "@Components/SearchBar";
 import WorldMap from "@Components/WorldMap";
 import Modal from "@Components/Modal";
 import Layout from "@Components/Layout";
+import ErrorBoundary from "@Components/ErrorBoundary";
 import Loader from "@Components/Loader";
 import fetchCountryData from "@Services/fetchCountry";
 import fetchNews from "@Services/fetchNews";
@@ -21,6 +22,15 @@ class App extends Component {
       this.getCountryData();
       this.getArticles();
     }
+
+    if (prevState.page < this.state.page) {
+      this.getArticles();
+    }
+    // if (this.state.page > 1) {
+    //     window.scrollTo({
+
+    //     })
+    // }
   }
 
   handleFormSubmit = (countryName) => {
@@ -56,7 +66,9 @@ class App extends Component {
     try {
       this.setState({ isLoading: true });
       const news = await fetchNews(countryName, page);
-      this.setState({ articles: news });
+      this.setState((prevState) => ({
+        articles: [...prevState.articles, ...news],
+      }));
     } catch (error) {
       console.log(error);
       this.setState({ error });
@@ -67,14 +79,22 @@ class App extends Component {
 
   render() {
     const { country, articles, isLoading } = this.state;
-    const areArticlesLoaded = articles.length > 0;
+    const areArticles = articles.length > 0;
     return (
       <>
         <Layout>
-          {isLoading && <Loader />}
+          {/* {isLoading && <Loader />} */}
           <SearchBar onSubmit={this.handleFormSubmit} />
+          {/* <ErrorBoundary> */}
           <WorldMap country={country} />
-          <Modal country={country} articles={articles} />
+          <Modal
+            country={country}
+            articles={articles}
+            isLoading={isLoading}
+            areArticles={areArticles}
+            onClick={this.handleLoadMore}
+          />
+          {/* </ErrorBoundary> */}
         </Layout>
       </>
     );

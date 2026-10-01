@@ -1,0 +1,9 @@
+@use "@Styles/shared.scss" as *;
+.Load_more-btn {
+  display: block;
+  margin: 25px auto 0;
+  width: 60%;
+  padding: 2.5px 10px;
+  border-radius: 20px;
+  border: none;
+}

@@ -27,16 +27,33 @@
 
   @media screen and (min-width: 1000px) {
     top: 50%;
+    left: 74%;
+    height: 90vh;
+    width: 50vw;
+  }
+
+  @media screen and (min-width: 1200px) {
+    top: 50%;
     left: 80%;
     height: 90vh;
     width: 35vw;
   }
 
-  .Modal-header_wrapper {
+  .Modal_header-wrapper {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
+
+    @media screen and (min-width: 900px) {
+      font-size: 0.9rem;
+    }
+
+    .Modal_title-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
 
     .Modal_Flag {
       display: inline;
@@ -47,6 +64,16 @@
   .Modal_country-data-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
+
+    @media screen and (min-width: 900px) {
+      gap: 8px;
+    }
+  }
+
+  .Modal_news-section {
+    h1 {
+      text-align: left;
+    }
   }
 }
